@@ -6,10 +6,10 @@ public class Isoceles extends Triangulo {
 
      private double h;
 
-     public Isoceles(double a, double base, double h) {
+     public Isoceles(double a, double base, double altura) {
           super(a, base);
           super.setC(a);
-          this.setH(h);
+          this.h = altura;
      }
 
      public double getH() {
@@ -21,7 +21,7 @@ public class Isoceles extends Triangulo {
      }
 
      public Isoceles() {
-          super(0, 0, 0, null);
+          super(0, 0, 0);
      }
 
      @Override
@@ -56,16 +56,21 @@ public class Isoceles extends Triangulo {
 
      @Override
      public String verificaValorNulo() {
-          String valorNulo = null;
+          String valorNulo;
           if (this.getH() == 0 || this.getH() == Double.NaN) {
-               valorNulo = "A propriedade que você procura é altura \nEu achei para você: ";
+               valorNulo = "A propriedade que você procura é a altura \nNão se preocupe, eu achei para você: \nAltura: " + this.calculoDePitagorasGetAltura();
           } else if (this.getBase() == 0 || this.getBase() == Double.NaN) {
-               valorNulo = "A propriedade que você procura é a base \nEu achei para você: ";
-          } else if (this.getC() == 0 || this.getC() == Double.NaN) {
-               valorNulo = "A propriedade que você procura é o lado \nEu achei para você: ";
-               if (this.getA() == 0 || this.getA() == Double.NaN) {
-                    valorNulo = "A propriedade que você procura é o lado \nEu achei para você: ";
+               if (this.getH() == this.getA()) {
+                    throw new RuntimeException("\nO calculo não pode ser efetuado pois a medida da altura nunca poderá ter a mesma medida do lado.");
+               } else if (this.getH() < this.getA()) {
+                    throw new RuntimeException("\nO calculo não pode ser efetuado pois a medida da altura ou do lado não são compatíveis.");
+               } else {
+                    valorNulo = "A propriedade que você procura é a base \nNão se preocupe, eu achei para você: \nBase: " + this.calculoDePitagorasGetBase();
                }
+          } else if (this.getA() == 0 || this.getA() == Double.NaN) {
+               valorNulo = "A propriedade que você procura é o lado \nNão se preocupe, eu achei para você: \nAltura: " + this.calculoDePitagorasGetC();
+          } else {
+               valorNulo = "Todas as informações estão de acordo.";
           }
           return valorNulo;
      }
@@ -73,16 +78,12 @@ public class Isoceles extends Triangulo {
      // Calculos + validação
      @Override
      public double getArea() {
-          double area = 0;
-          if (this.getH() == 0 || this.getH() == Double.NaN) {
+          double area;
+          if (this.getH() == 0 || this.getH() == Double.NaN
+                    || this.getBase() == 0 || this.getBase() == Double.NaN) {
                area = (this.getBase() * this.calculoDePitagorasGetAltura()) / 2;
-          } else if (this.getBase() == 0 || this.getBase() == Double.NaN) {
-               area = (this.getBase() * this.calculoDePitagorasGetBase()) / 2;
-          } else if (this.getC() == 0 || this.getC() == Double.NaN) {
-               area = (this.getBase() * this.calculoDePitagorasGetC()) / 2;
-               if (this.getA() == 0 || this.getA() == Double.NaN) {
-                    area = (this.getBase() * this.calculoDePitagorasGetA()) / 2;
-               }
+          } else {
+               area = (this.getBase() * this.getH()) / 2;
           }
           return area;
      }
@@ -95,22 +96,17 @@ public class Isoceles extends Triangulo {
      }
 
      protected double calculoDePitagorasGetAltura() {
-          this.setH(Math.sqrt(Math.pow(this.getC(), 2) - Math.pow((this.getBase() / 2), 2)));
+          this.setH(Math.sqrt(Math.pow(this.getA(), 2) - Math.pow((this.getBase() / 2), 2)));
           return this.getH();
      }
 
      protected double calculoDePitagorasGetBase() {
-          this.setBase(Math.sqrt(Math.pow(this.getH(), 2) - Math.pow(this.getC(), 2)));
+          this.setBase(Math.sqrt(Math.pow(this.getH(), 2) - Math.pow(this.getA(), 2)));
           return this.getBase();
      }
 
      protected double calculoDePitagorasGetC() {
-          this.setC(Math.sqrt(Math.pow(this.getC(), 2) - Math.pow((this.getBase() / 2), 2)));
+          this.setA(Math.sqrt(Math.pow(this.getH(), 2) - Math.pow((this.getBase() / 2), 2)));
           return this.getC();
-     }
-
-     protected double calculoDePitagorasGetA() {
-          this.setA(Math.sqrt(Math.pow(this.getA(), 2) - Math.pow((this.getBase() / 2), 2)));
-          return this.getA();
      }
 }

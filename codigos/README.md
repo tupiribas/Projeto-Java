@@ -1,8 +1,3 @@
-# INFORMAÇÕES :information_source: 
+# Informações :information_source:
 
-A classe principal é "AtividadesDoCurso".
-
-# INFORMATION :information_source:
-
-The main class is "AtividadesDoCurso".
-
+Os códigos apresentados nesse repositório tem como objetivo de aprimorar os seus conhecimentos sobre a **linguagem de programação Java** e devem ser aprimorados.

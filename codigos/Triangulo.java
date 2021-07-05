@@ -6,11 +6,10 @@ public abstract class Triangulo extends Figura {
      private double base;
      private double c;
 
-     public Triangulo(double a, double b, double c, String cor) {
+     public Triangulo(double a, double b, double c) {
           this.a = a;
           this.base = b;
           this.c = c;
-          super.setCor(cor);
      }
 
      public Triangulo(double a, double base) {

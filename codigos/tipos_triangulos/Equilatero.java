@@ -6,9 +6,9 @@ public class Equilatero extends Triangulo {
 
      private double h;
 
-     public Equilatero(double a, double h) {
+     public Equilatero(double a, double altura) {
           super(a);
-          this.setH(h);
+          this.h = altura;
      }
 
      public double getH() {
@@ -23,7 +23,8 @@ public class Equilatero extends Triangulo {
      public String toString() {
           String valores = "Informações do Triângulo"
                     + "\n----------------------------------------------\n"
-                    + "É um equilátero"
+                    + this.validarTriangulo()
+                    + this.verificaValorNulo()
                     + "\nPerímetro: " + this.getPerimetro()
                     + "\nÁrea: " + this.getArea()
                     + "\n----------------------------------------------\n";
@@ -32,27 +33,50 @@ public class Equilatero extends Triangulo {
 
      @Override
      public double getArea() {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          double area;
+          if (this.getH() == 0 || this.getH() == Double.NaN) {
+               area = (Math.pow(this.getA(), 2) * this.calculoDePitagorasGetAltura()) / 4;
+          } else {
+               area = (Math.pow(this.getA(), 2) * Math.sqrt(3)) / 4;
+          }
+          return area;
      }
 
      @Override
      public double getPerimetro() {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          return this.getA() * 3;
      }
 
      @Override
      public String verificaValorNulo() {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          String valorNulo;
+          if (this.getH() == 0 || this.getH() == Double.NaN) {
+               valorNulo = "\nA propriedade que você procura é a altura \nNão se preocupe, eu achei para você: \nAltura: " + this.calculoDePitagorasGetAltura();
+          } else {
+               valorNulo = "\nTodas as informações estão de acordo.";
+          }
+          return valorNulo;
      }
 
      @Override
      public boolean propriedadesDoTiangulo() {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          return this.getA() == this.getA();
      }
 
      @Override
      public String validarTriangulo() {
-          throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+          String tipo;
+          if (this.propriedadesDoTiangulo()) {
+               tipo = "É um triangulo Equilátero.";
+          } else {
+               throw new RuntimeException("O valores atribuidos, não pertencem a um triangulo isóceles.");
+          }
+          return tipo;
+     }
+
+     protected double calculoDePitagorasGetAltura() {
+          this.setH((Math.sqrt(3) * this.getA()) / 2);
+          return this.getH();
      }
 
 }
